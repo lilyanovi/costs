@@ -1,14 +1,14 @@
 <template>
-    <button @click="onClick">Add new cost +</button>
+    <button @click="showFormToggle">Add new cost +</button>
 </template>
 
 <script>
 export default {
     name: 'Button',
     methods: {
-        onClick() {
-            this.$emit('showFormClick')
-        }
+        showFormToggle() {
+            this.$store.commit('setShowForm', !this.$store.state.showForm)
+        },
     }
 }
 </script>

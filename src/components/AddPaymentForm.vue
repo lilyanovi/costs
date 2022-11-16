@@ -1,7 +1,11 @@
 <template>
-    <div class="form">
+    <div class="form" v-if="showForm">
         <input placeholder="Amount" v-model="amount" />
-        <input placeholder="Type" v-model="type" />
+        <select v-model="type">
+            <option v-for="option in options" :key="option">
+                {{ option }}
+            </option>
+        </select>
         <input placeholder="Date" v-model="date" />
         <button @click="onSaveClick">Save</button>
     </div>
@@ -16,13 +20,7 @@ export default {
             type: '',
             date: '',
         }
-    },
-    props: {
-        items: {
-            type: Array,
-            default: []
-        },
-    },
+    },  
     computed: {
         getCurrentDate(){
             const today = new Date();
@@ -30,27 +28,32 @@ export default {
             const m = today.getMonth() + 1;
             const y = today.getFullYear();
             return `${d}.${m}.${y}`
+        },
+        showForm() {
+            return this.$store.getters.getShowForm;
+        },
+        options(){
+            return this.$store.getters.getCategoryList
         }
     },
     methods: {
         onSaveClick(){
             const data = {
-                id: this.getId(),
+                id: this.$store.getters.getId + 1,
                 amount: +this.amount,
                 type: this.type,
                 date: this.date || this.getCurrentDate
             };
-            this.$emit('addNewPayment', data);
+            this.$store.commit('addDataToPaymentsList', data);
             this.amount = '';
             this.type = '';
             this.date = '';
 
-        },
-        getId() {
-            return (
-                this.items.map(({ id }) => id).sort((a, b) => a - b)[
-                    this.items.length - 1] + 1
-            );
+        }
+    },
+    mounted() {
+        if(!this.type?.length){
+            this.$store.dispatch('fetchCaterory')
         }
     }
 }

@@ -28,49 +28,26 @@
 <script>
 export default {
     name: "Pagination",
-    props: {
-        items: {
-            type: Array,
-            default: []
-        },
-        maxVisibleButtons: {
-            type: Number,
-            required: false,
-            default: 3
-        },
-        totalPages: {
-            type: Number,
-            required: true
-        },
-        perPage: {
-            type: Number,
-            required: true
-        },
-        currentPage: {
-            type: Number,
-            required: true
-        }
-    },
     computed: { 
         startPage() {
-            if (this.currentPage === 1) {
+            if (this.$store.getters.getCurrentPage === 1) {
             return 1;
             }
 
-            if (this.currentPage === this.totalPages) {
-                if((this.totalPages - this.maxVisibleButtons)>=1){
-                    return this.totalPages - this.maxVisibleButtons;
+            if (this.$store.getters.getCurrentPage === this.$store.getters.getTotalPages) {
+                if((this.$store.getters.getTotalPages - this.$store.getters.getMaxVisibleButtons)>=1){
+                    return this.$store.getters.getTotalPages - this.$store.getters.getMaxVisibleButtons;
                 } else {
                     return 1;
                 }
             }
 
-            return this.currentPage - 1;
+            return this.$store.getters.getCurrentPage - 1;
         },
         endPage() {
             return Math.min(
-                this.startPage + this.maxVisibleButtons - 1,
-                this.totalPages
+                this.startPage + this.$store.getters.getMaxVisibleButtons - 1,
+                this.$store.getters.getTotalPages
             );
         },
         pages() {
@@ -78,42 +55,40 @@ export default {
 
             for (
             let i = this.startPage;
-            i <= Math.min(this.startPage + this.maxVisibleButtons - 1, 
-            this.totalPages);
-            i++) {
+            i <= this.endPage; i++) {
                 range.push({
                 name: i,
-                isDisabled: i === this.currentPage
+                isDisabled: i === this.$store.getters.getCurrentPage
                 });
             }
 
             return range;
         },
         isInFirstPage() {
-            return this.currentPage === 1;
+            return this.$store.getters.getCurrentPage === 1;
         },
         isInLastPage() {
-            return this.currentPage === this.totalPages;
+            return this.$store.getters.getCurrentPage === this.$store.getters.getTotalPages;
         },
     },
     methods: {
         onClickFirstPage() {
-            this.$emit('pagechanged', 1);
+            this.$store.commit('setCurrentPage', 1);
         },
         onClickPreviousPage() {
-            this.$emit('pagechanged', this.currentPage - 1);
+            this.$store.commit('setCurrentPage', this.$store.getters.getCurrentPage - 1);
         },
         onClickPage(page) {
-            this.$emit('pagechanged', page);
+            this.$store.commit('setCurrentPage', page);
         },
         onClickNextPage() {
-            this.$emit('pagechanged', this.currentPage + 1);
+            this.$store.commit('setCurrentPage', this.$store.getters.getCurrentPage + 1);
         },
         onClickLastPage() {
-            this.$emit('pagechanged', this.totalPages);
+            this.$store.commit('setCurrentPage', this.$store.getters.getTotalPages);
         },
         isPageActive(page) {
-            return this.currentPage === page;
+            return this.$store.getters.getCurrentPage === page;
     }
 
 
