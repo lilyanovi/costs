@@ -1,26 +1,32 @@
 <template>
-  <!--  <div class="form" v-if="showForm">
+    <div class="form" v-if="showForm">
         <input placeholder="Amount" v-model="amount" />
-        <select v-model="type">
-            <option v-for="option in options" :key="option">
+        <select v-model="type" >
+            <option v-for="option in options" :key="option" v-bind:value="option" >
                 {{ option }}
             </option>
         </select>
-        <input placeholder="Date" v-model="date" />
+        <input placeholder="Category" v-model="type"/>
+        <input placeholder="Date" v-model="date"/>
         <button @click="onSaveClick">Save</button>
-    </div>-->
+    </div>
 </template>
 
 <script>
 export default {
     name: "AddPaymentForm",
+    props: {
+    to: Number,
+
+  },
     data() {
-        return {
-            amount: '',
-            type: '',
-            date: '',
+        return {   
+            
+            type: this.$route.params.type,
+            amount: this.$route.query.value,
+            date: this.getCurrentDate,
         }
-    },  
+    },
     computed: {
         getCurrentDate(){
             const today = new Date();
@@ -34,10 +40,12 @@ export default {
         },
         options(){
             return this.$store.getters.getCategoryList
-        }
+        },
+       
     },
     methods: {
         onSaveClick(){
+            if(this.type !=='' && this.amount !==''){
             const data = {
                 id: this.$store.getters.getId + 1,
                 amount: +this.amount,
@@ -48,10 +56,16 @@ export default {
             this.amount = '';
             this.type = '';
             this.date = '';
-
+            } else {
+                console.log('Please, fill in the type and amount of spending')
+            }
         }
     },
     mounted() {
+        if(this.$route.params.type  && this.$route.query.value ){
+            this.onSaveClick();
+        }
+
         if(!this.type?.length){
             this.$store.dispatch('fetchCaterory')
         }
