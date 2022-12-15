@@ -31,8 +31,22 @@ export default {
     Button,
     Pagination,
     TotalSum
+  },
+  methods: {
+        show() {
+          this.isShown = true;
+        },
+        hide() {
+          this.isShown = false;
+          console.log("hide")
+        },
+      },
+  mounted() {
+    this.$context.EventEmitter.$on("show", this.show);
+    this.$context.EventEmitter.$on("hide", this.hide);
   }
 }
+
 </script>
 
 <style>

@@ -15,7 +15,7 @@ const routes = [
     component: HomeView,
     children:[
       {
-        path: "/add/payment/:type?",
+        path: "/:mode/payment/:type?",
         name: "form",
         component: () => import('../views/PaymentsPage.vue'),
       }

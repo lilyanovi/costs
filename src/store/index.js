@@ -51,7 +51,20 @@ export default new Vuex.Store({
     setShowForm: (state, payload) => (state.showForm = payload),
     setCategoriesListData: (state,payload) => {
       state.categoriesList = payload
-    }
+    },
+    removeCostsList: (state, payload) => {
+      console.log(payload.id)
+      state.paymentsList.splice(
+      state.paymentsList.indexOf(payload), 
+      1)
+    },
+    editCostsList: (state, payload) => (state.paymentsList = state.paymentsList.map((item) => {
+      if(item.id === payload.id){
+        return payload;
+      } else{
+        return item
+      }
+    }))
   },
   actions: {
     async fetchData({ commit }) {
