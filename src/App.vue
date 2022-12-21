@@ -1,60 +1,36 @@
 <template>
-  <div id="app">
-    <nav class="nav_home">
-      <router-link to="/">
-        <img alt="Vue logo" class="logo" src="./assets/logo.png"/></router-link>
-    </nav>
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    
-    <header class="center">
-      <h1>My personal costs</h1>
-    </header>
+  <v-app>
+    <v-app-bar  elevation="14"  height="50px">
+      <v-btn icon color="blue lighten-2" to="/">
+        <v-icon large color="green darken-2">home</v-icon>
+      </v-btn>  
+      <v-toolbar-title>My personal costs</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items  >
+        <v-btn color="green darken-2" text to="/">Home</v-btn>   
+        <v-btn color="green darken-2" text to="/about">About</v-btn>
+      </v-toolbar-items>
+    </v-app-bar>  
 
-    <router-view/>
-
-   
-  </div>
+    <v-main>
+      <v-container>
+        <v-row>
+          <v-container>
+            <router-view></router-view>
+          </v-container>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
+
 export default {
-  name: 'App'
-  
-}
+  name: 'App',
+
+  data: () => ({
+    //
+  }),
+};
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-.center {
-    padding-left: calc(50% - 570px);
-    padding-right: calc(50% - 570px);
-}
-.logo {
-  max-height: 100px;
-  padding: 0;
-}
-.nav_home {
-  padding: 0;
-}
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>

@@ -37,6 +37,33 @@ export default new Vuex.Store({
       state.paymentsList.map(({ id }) => id).sort((a, b) => a - b)[
         state.paymentsList.length - 1
       ],
+    getChartData: state => {
+        let a = undefined;
+        a = state.paymentsList.reduce((acc, cost) => {
+          acc[cost.type] =
+            acc[cost.type] === undefined
+              ? cost.amount
+              : acc[cost.type] + cost.amount;
+          return acc;
+        }, {});
+  
+        return {
+          labels: Object.keys(a),
+          datasets: [
+            {
+              data: Object.values(a),
+              backgroundColor: [
+                "#41B883",
+                "#E46651",
+                "#00D8FF",
+                "#DD1B16",
+                "#DD1654",
+                "#DD1744",
+              ],
+            },
+          ],
+        };
+      }
 
   },
   mutations: {
@@ -65,6 +92,7 @@ export default new Vuex.Store({
         return item
       }
     }))
+    
   },
   actions: {
     async fetchData({ commit }) {
@@ -137,7 +165,5 @@ export default new Vuex.Store({
       });
       return commit("setCategoriesListData", list);
     }
-  },
-  modules: {
   }
 })

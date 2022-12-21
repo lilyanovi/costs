@@ -1,15 +1,48 @@
 <template>
-    <div class="form" v-if="showForm">
-        <input placeholder="Amount" v-model="amount" />
-        <select v-model="type" >
-            <option v-for="option in options" :key="option" v-bind:value="option" >
-                {{ option }}
-            </option>
-        </select>
-        <input placeholder="Category" v-model="type"/>
-        <input placeholder="Date" v-model="date"/>
-        <button @click="onSaveClick">Save</button>
-    </div>
+    <v-flex sm6>
+    <v-card>
+        <v-layout wrap align-space-between justify-center column fill-height 
+            v-if="showForm"
+            class="pa-3"
+            >
+            <v-flex xs12 sm6 d-flex>
+                <v-text-field  placeholder="Amount" v-model="amount" solo />
+            </v-flex>
+                      
+            <v-flex xs12 sm6 d-flex>
+                <v-select
+                    v-model="type"
+                    label="Category"
+                    :items=options
+                    solo
+                >            
+                </v-select>
+            </v-flex>
+
+            <v-flex xs12 sm6 d-flex>
+                <v-text-field 
+                    placeholder="Transport" 
+                    v-model="type"
+                    label="Other category"
+                    solo
+                >
+                </v-text-field>
+            </v-flex>
+
+            <v-flex xs12 sm6 d-flex>
+                <v-text-field  label="Date" placeholder="Date" v-model="date" solo/>
+            </v-flex>
+
+            <v-btn block 
+                @click="onSaveClick" 
+                color="green" 
+                dark
+                >Save
+            </v-btn>
+
+        </v-layout>
+    </v-card>
+</v-flex>
 </template>
 
 <script>
@@ -17,7 +50,6 @@ export default {
     name: "AddPaymentForm",
     props: {
     to: Number,
-
   },
     data() {
         return {   
@@ -25,6 +57,7 @@ export default {
             type: this.$route.params.type,
             amount: this.$route.query.value,
             date: this.getCurrentDate,
+           
         }
     },
     computed: {
@@ -73,13 +106,3 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 30px;
-    max-width: 300px;
-    border: 1px solid grey;
-}
-</style>
