@@ -1,5 +1,6 @@
 <template>
-    <p>Total: {{ getSumValue }}</p>
+    <h1 class="title font-weight-medium pa-3" 
+    >Total: {{ getSumValue }}</h1>
 </template>
 
 <script>

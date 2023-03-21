@@ -1,49 +1,36 @@
 <template>
-  <div id="app">
-    <header class="center">
-      <h1>My personal costs</h1>
-    </header>
+  <v-app>
+    <v-app-bar  elevation="14"  height="50px">
+      <v-btn icon color="blue lighten-2" to="/">
+        <v-icon large color="green darken-2">home</v-icon>
+      </v-btn>  
+      <v-toolbar-title>My personal costs</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items  >
+        <v-btn color="green darken-2" text to="/">Home</v-btn>   
+        <v-btn color="green darken-2" text to="/about">About</v-btn>
+      </v-toolbar-items>
+    </v-app-bar>  
 
-    <main class="center">
-      <Button />
-      <AddPaymentForm />
-      <PaymentsDisplay />
-      <Pagination />
-      <TotalSum />
-    </main> 
-  </div>
+    <v-main>
+      <v-container>
+        <v-row>
+          <v-container>
+            <router-view></router-view>
+          </v-container>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import PaymentsDisplay from './components/PaymentsDisplay.vue'
-import AddPaymentForm from './components/AddPaymentForm.vue'
-import Button from './components/Button.vue'
-import Pagination from './components/Pagination.vue'
-import TotalSum from './components/TotalSum.vue'
 
 export default {
   name: 'App',
-  components: {
-    PaymentsDisplay,
-    AddPaymentForm,
-    Button,
-    Pagination,
-    TotalSum
-}
-}
-</script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-.center {
-    padding-left: calc(50% - 570px);
-    padding-right: calc(50% - 570px);
-}
-</style>
+  data: () => ({
+    //
+  }),
+};
+</script>

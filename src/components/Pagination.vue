@@ -102,6 +102,7 @@ export default {
     list-style-type: none;
     display: flex;
     justify-content: center;
+    gap:10px;
 }
 .active {
   background-color: #4AAE9B;
