@@ -6,7 +6,7 @@
           <p>Category</p>
           <p>Value</p>
         </div>
-        <div class="costs_table" v-for="item of items" v-bind:key="item.id">
+        <div class="costs_table" v-for="item of paymentsList" v-bind:key="item.id">
           <p>{{ item.id }}</p>
           <p>{{ item.date }}</p>
           <p>{{ item.type }}</p>
@@ -18,10 +18,12 @@
 <script>
 export default {
   name: 'PaymentsDisplay',
-  props: {
-    items: {
-        type: Array,
-        default: [],
+  mounted(){
+    this.$store.dispatch('fetchData')
+  },
+  computed: {
+    paymentsList() {
+      return this.$store.getters.getPaginatedData
     }
   }
 }
